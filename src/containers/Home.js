@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { loginUser } from '../actions/auth'
 import Login from '../components/Home/Login'
+import Main from './Main'
 
 const Home = React.memo(props => {
   const { loggedIn, loginUser } = props 
@@ -13,7 +14,7 @@ const Home = React.memo(props => {
     return <Login loginUser={loginUser} />
   }
 
-  return null
+  return <Main />
 })
 
 const mapStateToProps = state => {
