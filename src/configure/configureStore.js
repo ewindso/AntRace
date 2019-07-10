@@ -1,8 +1,11 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { createLogger } from 'redux-logger'
-import { watchAuth } from '../sagas/auth'
+import { watchAuthRequests } from '../sagas/auth'
+import auth from '../reducers/auth'
 import ant from '../reducers/ant'
+
+const reducers = combineReducers({ auth, ant })
 
 const logger = createLogger({})
 const sagaMiddleware = createSagaMiddleware()
@@ -11,16 +14,16 @@ let store
 
 if(__DEV__) {
   store = createStore(
-    ant, 
+    reducers, 
     applyMiddleware(logger, sagaMiddleware)
   )
 } else {
   store = createStore(
-    ant,
+    reducers,
     applyMiddleware(sagaMiddleware)
   )
 }
 
-sagaMiddleware.run(watchAuth)
+sagaMiddleware.run(watchAuthRequests)
 
 export default store
