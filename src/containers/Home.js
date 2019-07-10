@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, LayoutAnimation, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { loginUser } from '../actions/auth'
 
 const Home = React.memo(props => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.welcomeView}>
         <Text style={styles.welcomeText}>There's really only one thing to do...</Text>
-        <TouchableOpacity style={styles.loginButton}>
+        <TouchableOpacity style={styles.loginButton} onPress={() => props.loginUser()}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
       </View>
@@ -46,4 +47,20 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Home
+const mapStateToProps = state => {
+  const {
+    auth: {
+      loggedIn
+    }
+  } = state 
+
+  return { loggedIn }
+}
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    loginUser
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
