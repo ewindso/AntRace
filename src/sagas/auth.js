@@ -2,6 +2,11 @@ import { eventChannel } from 'redux-saga'
 import { take, call, fork, cancel, cancelled, select } from 'redux-saga/effects'
 import { LOGIN_USER, LOGOUT_USER } from '../constants/actionTypes'
 
+const GRAPHQL_ENDPOINTS = [
+  'https://antserver-blocjgjbpw.now.sh/graphqzl', 
+  'https://guarded-shore-81814.herokuapp.com/graphql'
+]
+
 export function *watchAuthRequests() {
   let action 
 
@@ -26,5 +31,34 @@ function *checkUserLoggedIn() {
     }
   } = yield select() 
 
-  console.log(loggedIn)
+  if(loggedIn) {
+    const data = yield call(getAntsData)
+
+    console.log(data)
+  }
+}
+
+
+function *getAntsData(endpointNum = 0) {
+  if(endpointNum >= GRAPHQL_ENDPOINTS.length) {
+    endpointNum = 0
+  }
+
+  const endpoint = GRAPHQL_ENDPOINTS[endpointNum]
+
+  const response = yield call(fetch, endpoint, {
+    method: 'POST', 
+    headers: { 'Content-Type': 'application/json' }, 
+    body: JSON.stringify({
+      query: '{ ants { name length color } }'
+    })
+  })
+
+  if(response.status !== 200) {  // try again on different endpoint
+    return yield call(getAntsData, endpointNum+1)
+  }
+
+  const { data } = yield call([response, response.json])
+
+  return data
 }
