@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga'
 import { createLogger } from 'redux-logger'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { watchAuthRequests } from '../sagas/auth'
+import rootSaga from '../sagas'
 import auth from '../reducers/auth'
 import ant from '../reducers/ant'
 
@@ -34,7 +34,7 @@ if(__DEV__) {
   )
 }
 
-sagaMiddleware.run(watchAuthRequests)
+sagaMiddleware.run(rootSaga)
 
 const persistor = persistStore(store)
 
