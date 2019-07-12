@@ -1,6 +1,7 @@
 import { eventChannel } from 'redux-saga'
-import { take, call, fork, cancel, cancelled, select } from 'redux-saga/effects'
+import { take, call, fork, put, select } from 'redux-saga/effects'
 import { LOGIN_USER, LOGOUT_USER } from '../constants/actionTypes'
+import { updateAntsData } from '../actions/auth'
 
 const GRAPHQL_ENDPOINTS = [
   'https://antserver-blocjgjbpw.now.sh/graphqzl', 
@@ -32,9 +33,9 @@ function *checkUserLoggedIn() {
   } = yield select() 
 
   if(loggedIn) {
-    const data = yield call(getAntsData)
+    const { ants } = yield call(getAntsData)
 
-    console.log(data)
+    yield put(updateAntsData(ants))
   }
 }
 
