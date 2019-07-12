@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, LayoutAnimation, FlatList } from 'react-native'
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, LayoutAnimation, FlatList, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -11,6 +11,9 @@ const Main = React.memo(props => {
         <TouchableOpacity style={styles.logoutButton} onPress={() => {}}>
           <Text style={styles.logoutButtonText}>Logout</Text>
         </TouchableOpacity>
+      </View>
+      <View style={styles.antView}>
+        <Image source={require('../assets/ant.png')} style={{tintColor: 'orange', width: 50, height: 30}} />
       </View>
     </SafeAreaView>
   )
