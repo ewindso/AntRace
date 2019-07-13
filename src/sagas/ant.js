@@ -1,5 +1,6 @@
 import { eventChannel } from 'redux-saga'
-import { take, call, fork, cancel, cancelled, select } from 'redux-saga/effects'
+import { take, call, fork, put, cancel, cancelled, select } from 'redux-saga/effects'
+import { updateAntComputation } from '../actions/ants'
 import { START_ANT_COMPUTATIONS } from '../constants/actionTypes'
 
 export function* watchAntRequests() {
@@ -29,7 +30,8 @@ function* startAntComputations() {
 
   while(antsLeftToCompute > 0) {
     const { antName, likelihood } = yield take(channel)
-    console.log(antName, likelihood)
+    yield put(updateAntComputation(antName, likelihood))
+
     antsLeftToCompute--
   }
 
