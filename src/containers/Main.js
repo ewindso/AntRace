@@ -42,7 +42,9 @@ const Main = React.memo(props => {
             )}
           </View>
           <View style={styles.animationView}>
-
+            <Ant color={'#555'} duration={3500} />
+            <Ant color={'#333'} duration={5500} />
+            <Ant color={'#999'} duration={4000} />
           </View>
           {/* <View style={styles.antView}>
             <Image source={require('../assets/ant.png')} style={{tintColor: 'orange', width: 50, height: 30}} />
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
     color: 'white'
   }, 
   listView: {
-    flex: 0.5
+    flex: 1
   }, 
   infoView: {
     borderTopWidth: 1, 
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   }, 
   animationView: {
-    flex: 1
+    height: 110, 
   }
 })
 
