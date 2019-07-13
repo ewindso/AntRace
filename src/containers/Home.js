@@ -4,7 +4,7 @@ import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, LayoutAnimation
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { loginUser } from '../actions/auth'
-import Login from '../components/Home/Login'
+import Login from '../components/Login'
 import Main from './Main'
 
 const Home = React.memo(props => {

@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   }, 
   logoutButtonText: {
     fontSize: 18, 
-    color: 'blue'
+    color: 'white'
   }
 })
 
