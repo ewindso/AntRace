@@ -1,4 +1,4 @@
-import { UPDATE_ANTS_DATA } from '../constants/actionTypes'
+import { UPDATE_ANTS_DATA, START_ANT_COMPUTATIONS } from '../constants/actionTypes'
 
 const initialState = {
   data: [], 
@@ -12,6 +12,9 @@ export default function ant(state=initialState, action) {
   switch(type) {
     case UPDATE_ANTS_DATA: {
       return { ...state, data: payload.data, isLoading: false }
+    }
+    case START_ANT_COMPUTATIONS: {
+      return { ...state, computationStatus: 'in_progress' }
     }
   }
 

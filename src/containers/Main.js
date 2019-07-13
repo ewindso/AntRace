@@ -30,10 +30,14 @@ const Main = React.memo(props => {
           <View style={styles.listView}>
           </View>
           <View style={styles.infoView}>
-            {computationStatus === 'not_yet_run' && (
+            {computationStatus === 'not_yet_run' ? (
               <TouchableOpacity style={styles.startButton} onPress={() => props.startAntComputations()}>
                 <Text style={styles.startButtonText}>Start Computation</Text>
               </TouchableOpacity>
+            ) : (
+              <Text style={styles.computationStatusText}>
+                {computationStatus === 'in_progress' ? 'In Progress...' : 'All Calculated'}
+              </Text>
             )}
           </View>
           <View style={styles.animationView}>
