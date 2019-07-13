@@ -15,7 +15,8 @@ const Ant = React.memo(props => {
         {
           toValue: 1, 
           duration: props.duration, 
-          easing: Easing.linear
+          easing: Easing.linear, 
+          useNativeDriver: true
         }
       )
     ).start()
