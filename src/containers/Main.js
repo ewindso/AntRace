@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, LayoutAnimation, FlatList, Image, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import AntList from './AntList'
 import { startAntComputations } from '../actions/ants'
 
 import Ant from '../components/Ant'
@@ -28,6 +28,7 @@ const Main = React.memo(props => {
             </TouchableOpacity>
           </View>
           <View style={styles.listView}>
+            <AntList />
           </View>
           <View style={styles.infoView}>
             {computationStatus === 'not_yet_run' ? (
