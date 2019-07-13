@@ -11,3 +11,7 @@ export function startAntComputations() {
 export function updateAntComputation(name, likelihood) {
   return { type: UPDATE_ANT_COMPUTATION, payload: { name, likelihood } }
 }
+
+export function antComputationsFinished() {
+  return { type: ANT_COMPUTATIONS_FINISHED }
+}

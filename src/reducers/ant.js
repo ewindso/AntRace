@@ -24,6 +24,9 @@ export default function ant(state=initialState, action) {
 
       return { ...state, computations }
     }
+    case ANT_COMPUTATIONS_FINISHED: {
+      return { ...state, computationStatus: 'finished' }
+    }
   }
 
   return state
