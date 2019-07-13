@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, LayoutAnimation, FlatList, Image, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { startAntComputations } from '../actions/ants'
+
 import Ant from '../components/Ant'
 
 const Main = React.memo(props => {
@@ -10,7 +12,7 @@ const Main = React.memo(props => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   }, [])
 
-  const { data, isLoading } = props 
+  const { data, isLoading, computationStatus } = props 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -28,9 +30,11 @@ const Main = React.memo(props => {
           <View style={styles.listView}>
           </View>
           <View style={styles.infoView}>
-            <TouchableOpacity style={styles.startButton}>
-              <Text style={styles.startButtonText}>Start Computation</Text>
-            </TouchableOpacity>
+            {computationStatus === 'not_yet_run' && (
+              <TouchableOpacity style={styles.startButton} onPress={() => props.startAntComputations()}>
+                <Text style={styles.startButtonText}>Start Computation</Text>
+              </TouchableOpacity>
+            )}
           </View>
           <View style={styles.animationView}>
 
@@ -102,15 +106,18 @@ const mapStateToProps = state => {
   const {
     ant: {
       data,
-      isLoading
+      isLoading, 
+      computationStatus,
     }
   } = state 
 
-  return { data, isLoading }
+  return { data, isLoading, computationStatus }
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({}, dispatch)
+  return bindActionCreators({
+    startAntComputations
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
