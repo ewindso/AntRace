@@ -19,6 +19,7 @@ const Main = React.memo(props => {
     <SafeAreaView style={styles.container}>
       { isLoading ? (
         <View key={'container'} style={styles.loadingView}>
+          <Text style={styles.loadingText}>Loading ant data...</Text>
           <ActivityIndicator animating={true} size={'large'} />
         </View>
       ) : (
@@ -69,11 +70,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center',
   }, 
+  loadingText: {
+    fontSize: 18, 
+    marginBottom: 15, 
+    color: '#333'
+  }, 
   header: {
     width: '100%', 
     height: 50, 
-    backgroundColor: '#efefef', 
     borderBottomColor: 'gray', 
+    borderBottomWidth: 0.5,
     flexDirection: 'row', 
     justifyContent: 'flex-end'
   }, 
