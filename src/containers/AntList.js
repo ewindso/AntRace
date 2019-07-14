@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, LayoutAnimation, ScrollView, 
 import Ant from '../components/Ant'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import _ from 'lodash'
 
 const AntList = React.memo(props => {
   const { data, computations, computationStatus } = props 
@@ -63,11 +64,20 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   const {
     ant: {
-      data, 
+      data: unsortedData, 
       computations,
       computationStatus,
     }, 
   } = state 
+
+  let data = unsortedData.map(antData => {
+    const { name } = antData
+    const computation = computations[name] ? computations[name] : 0
+
+    return { ...antData, computation }
+  })
+
+  data = _.orderBy(data, ['computation'], ['desc'])
 
   return { data, computations, computationStatus }
 }
