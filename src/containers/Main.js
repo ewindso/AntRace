@@ -3,6 +3,7 @@ import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, LayoutAnimation
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import AntList from './AntList'
+import { logoutUser } from '../actions/auth'
 import { startAntComputations } from '../actions/ants'
 
 import Ant from '../components/Ant'
@@ -12,7 +13,7 @@ const Main = React.memo(props => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   }, [])
 
-  const { data, isLoading, computationStatus } = props 
+  const { logoutUser, isLoading, computationStatus } = props 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -23,7 +24,7 @@ const Main = React.memo(props => {
       ) : (
         <View key={'container'} style={styles.container}>
           <View style={styles.header}>
-            <TouchableOpacity style={styles.logoutButton} onPress={() => {}}>
+            <TouchableOpacity style={styles.logoutButton} onPress={() => logoutUser()}>
               <Text style={styles.logoutButtonText}>Logout</Text>
             </TouchableOpacity>
           </View>
@@ -31,15 +32,13 @@ const Main = React.memo(props => {
             <AntList />
           </View>
           <View style={styles.infoView}>
-            {computationStatus === 'not_yet_run' ? (
+            {computationStatus === 'not_yet_run' || computationStatus === 'finished' ? (
               <TouchableOpacity style={styles.startButton} onPress={() => props.startAntComputations()}>
-                <Text style={styles.startButtonText}>Start Computation</Text>
+                <Text style={styles.startButtonText}>{ computationStatus === 'not_yet_run' ? 'Start Computation' : 'Run Computation Again' }</Text>
               </TouchableOpacity>
             ) : (
               <View style={styles.inProgressView}>
-                <Text style={styles.computationStatusText}>
-                  {computationStatus === 'in_progress' ? 'In Progress...' : 'All Calculated'}
-                </Text>
+                <Text style={styles.computationStatusText}>In Progress...</Text>
                 { computationStatus === 'in_progress' && (
                   <ActivityIndicator animating={true} size={'small'} />
                 )}
@@ -124,18 +123,18 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   const {
     ant: {
-      data,
       isLoading, 
       computationStatus,
     }
   } = state 
 
-  return { data, isLoading, computationStatus }
+  return { isLoading, computationStatus }
 }
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
-    startAntComputations
+    startAntComputations, 
+    logoutUser,
   }, dispatch)
 }
 

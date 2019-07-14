@@ -1,4 +1,4 @@
-import { UPDATE_ANTS_DATA, START_ANT_COMPUTATIONS, UPDATE_ANT_COMPUTATION, ANT_COMPUTATIONS_FINISHED } from '../constants/actionTypes'
+import { UPDATE_ANTS_DATA, START_ANT_COMPUTATIONS, UPDATE_ANT_COMPUTATION, ANT_COMPUTATIONS_FINISHED, LOGOUT_USER } from '../constants/actionTypes'
 
 const initialState = {
   data: [], 
@@ -15,7 +15,7 @@ export default function ant(state=initialState, action) {
       return { ...state, data: payload.data, isLoading: false }
     }
     case START_ANT_COMPUTATIONS: {
-      return { ...state, computationStatus: 'in_progress' }
+      return { ...state, computations: {}, computationStatus: 'in_progress' }
     }
     case UPDATE_ANT_COMPUTATION: {
       const { name, likelihood } = payload 
@@ -26,6 +26,9 @@ export default function ant(state=initialState, action) {
     }
     case ANT_COMPUTATIONS_FINISHED: {
       return { ...state, computationStatus: 'finished' }
+    }
+    case LOGOUT_USER: {
+      return { ...initialState }
     }
   }
 
