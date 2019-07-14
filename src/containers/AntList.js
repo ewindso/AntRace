@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 const AntList = React.memo(props => {
-  const { data, computations } = props 
+  const { data, computations, computationStatus } = props 
   
   return (
     <ScrollView 
@@ -14,14 +14,22 @@ const AntList = React.memo(props => {
       {data.map(item => {
         const { name, color } = item 
         const antComputation = computations[name]
-        console.log(antComputation)
+
+        const duration = antComputation ? (1.1 - antComputation) * 10000 : 0
+
         return (
           <View key={name} style={styles.row}>
             <Text style={styles.nameText}>{name}</Text>
-            <Text style={styles.statusText}>In Progress</Text>
-            <View style={styles.antView}>
-              <Ant color={color.toLowerCase()} duration={5000} />
-            </View>
+            <Text style={styles.statusText}>
+              { computationStatus === 'not_yet_run' ? 'Not yet run' : (
+                antComputation ? `Done! ${antComputation}` : 'In Progress...'
+              )}
+            </Text>
+            { antComputation && (
+              <View style={styles.antView}>
+                <Ant color={color.toLowerCase()} duration={duration} />
+              </View>
+            )}
           </View>
         )
       })}
@@ -57,10 +65,11 @@ const mapStateToProps = state => {
     ant: {
       data, 
       computations,
+      computationStatus,
     }, 
   } = state 
 
-  return { data, computations }
+  return { data, computations, computationStatus }
 }
 
 const mapDispatchToProps = dispatch => {
