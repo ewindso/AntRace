@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   header: {
     width: '100%', 
     height: 50, 
-    backgroundColor: '#ccc', 
+    backgroundColor: '#efefef', 
     borderBottomColor: 'gray', 
     flexDirection: 'row', 
     justifyContent: 'flex-end'
@@ -81,10 +81,11 @@ const styles = StyleSheet.create({
   }, 
   logoutButtonText: {
     fontSize: 18, 
-    color: 'white'
+    color: 'gray'
   }, 
   listView: {
-    flex: 1
+    flex: 1, 
+    marginTop: 10
   }, 
   infoView: {
     borderTopWidth: 1, 
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   }, 
   animationView: {
+    paddingTop: 10,
     height: 110, 
   }
 })
