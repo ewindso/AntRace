@@ -20,7 +20,7 @@ const AntList = React.memo(props => {
             <Text style={styles.nameText}>{name}</Text>
             <Text style={styles.statusText}>In Progress</Text>
             <View style={styles.antView}>
-              <Ant color={color} duration={5000} />
+              <Ant color={color.toLowerCase()} duration={5000} />
             </View>
           </View>
         )
