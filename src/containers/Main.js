@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }, 
   logoutButtonText: {
-    fontSize: 18, 
+    fontSize: 15, 
     color: 'gray'
   }, 
   listView: {
