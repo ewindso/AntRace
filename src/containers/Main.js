@@ -36,9 +36,14 @@ const Main = React.memo(props => {
                 <Text style={styles.startButtonText}>Start Computation</Text>
               </TouchableOpacity>
             ) : (
-              <Text style={styles.computationStatusText}>
-                {computationStatus === 'in_progress' ? 'In Progress...' : 'All Calculated'}
-              </Text>
+              <View style={styles.inProgressView}>
+                <Text style={styles.computationStatusText}>
+                  {computationStatus === 'in_progress' ? 'In Progress...' : 'All Calculated'}
+                </Text>
+                { computationStatus === 'in_progress' && (
+                  <ActivityIndicator animating={true} size={'small'} />
+                )}
+              </View>
             )}
           </View>
           <View style={styles.animationView}>
@@ -105,10 +110,15 @@ const styles = StyleSheet.create({
     borderColor: 'black', 
     borderRadius: 10
   }, 
+  inProgressView: {
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  }, 
   animationView: {
     paddingTop: 10,
     height: 110, 
-  }
+  }, 
 })
 
 const mapStateToProps = state => {
