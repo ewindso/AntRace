@@ -28,7 +28,7 @@ const AntList = React.memo(props => {
             <Text style={styles.nameText}>{name}</Text>
             <Text style={styles.statusText}>
               { computationStatus === 'not_yet_run' ? 'Not yet run' : (
-                antComputation ? `Done! ${antComputation}` : 'In Progress...'
+                antComputation ? `Likelihood: ${antComputation}` : 'In Progress...'
               )}
             </Text>
             { antComputation && (
