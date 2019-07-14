@@ -6,6 +6,11 @@ import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 
 const AntList = React.memo(props => {
+
+  useEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+  }, [props.data])
+
   const { data, computations, computationStatus } = props 
   
   return (
