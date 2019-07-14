@@ -1,18 +1,25 @@
 import { eventChannel } from 'redux-saga'
 import { take, call, fork, put, cancel, cancelled, select } from 'redux-saga/effects'
 import { updateAntComputation, antComputationsFinished } from '../actions/ants'
-import { START_ANT_COMPUTATIONS } from '../constants/actionTypes'
+import { START_ANT_COMPUTATIONS, LOGOUT_USER } from '../constants/actionTypes'
 
 export function* watchAntRequests() {
   let action
+  let computationTask
 
-  while(action = yield take([START_ANT_COMPUTATIONS])) {
+  while(action = yield take([START_ANT_COMPUTATIONS, LOGOUT_USER])) {
     const { type, payload } = action 
 
     switch(type) {
       case START_ANT_COMPUTATIONS: {
-        yield fork(startAntComputations)
+        computationTask = yield fork(startAntComputations)
         break 
+      }
+      case LOGOUT_USER: {
+        if(computationTask) {
+          yield cancel(computationTask)
+          break 
+        }
       }
     }
   }
@@ -28,16 +35,22 @@ function* startAntComputations() {
   const channel = yield call(antCalculator, data)
   let antsLeftToCompute = data.length 
 
-  while(antsLeftToCompute > 0) {
-    const { antName, likelihood } = yield take(channel)
-    yield put(updateAntComputation(antName, likelihood))
+  try {
+    while(antsLeftToCompute > 0) {
+      const { antName, likelihood } = yield take(channel)
+      yield put(updateAntComputation(antName, likelihood))
 
-    antsLeftToCompute--
+      antsLeftToCompute--
+    }
+
+    yield put(antComputationsFinished())
+
+    channel.close()
+  } finally {
+    if(yield cancelled()) {
+      channel.close()
+    }
   }
-
-  yield put(antComputationsFinished())
-
-  channel.close()
 }
 
 function antCalculator(antsData) {
@@ -56,6 +69,7 @@ function antCalculator(antsData) {
 
 function generateAntWinLikelihoodCalculator() {
   const delay = 7000 + Math.random() * 7000;
+
   const likelihoodOfAntWinning = Math.random();
 
   return (callback) => {
