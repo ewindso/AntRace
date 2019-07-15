@@ -1,5 +1,11 @@
 # AntRace
 
+For all:
+
+```
+yarn
+```
+
 For iOS:
 
 ```
